@@ -2,11 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-/** GET /api-status - Check service status **/
-router.get('/hola', (req, res) =>
-  res.json({
-    status: "Todo ok en Archivo routes"
-  })
-);
+const contentCtrl = require('../controllers/content');
+api.get('/content/:code', contentCtrl.getContent);
 
-export default router;
+module.exports = api;

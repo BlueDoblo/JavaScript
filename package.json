@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "node-gyp": "^7.1.2",
+    "oracledb": "^5.1.0",
+    "require": "^2.4.20"
   }
 }

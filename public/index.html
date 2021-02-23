@@ -8,14 +8,78 @@
 <body>
   <h1>Pagina Web corriendo en servidor local con node.js</h1>
 
-  <script>
-    fetch('http://localhost:3000/hola/');
 
-  </script>
+  <h8>Ingrese el Nro de Direccion a Consultar:</h8>
+  <input
+  type="number"
+  value={this.state.value}
+  onChange={this.handleChange}
+  />
+
+  <button class="ConsultarBD">Consultar BD</button>
+  <h3>Resultado de BD:</h3>
+  <code class="ResultadoBD"></code>
+
+
+<script>
+  // get dom elements
+    const button = document.querySelector('.ConsultarBD');
+    const content = document.querySelector('.ResultadoBD');
+
+  // fetch to the api
+  const ConsultaBDApi = () => {
+    fetch('http://localhost:3000/tweetRequest/4')
+      .then(response => response.json())
+      .then(json => content.innerHTML = JSON.stringify(json))
+  };
+
+  // add onClick listener to the button
+  button.addEventListener('click', ConsultaBDApi);
+ 
+  const http = require('http');
+const oracledb = require('oracledb');
+let error;
+let user;
+ 
+oracledb.getConnection(
+    {
+      user: process.env.EECS_USER, 
+      password: process.env.EECS_PASSWORD,
+      connectString: 'dbaccess'
+    }, 
+    function(err, connection) {
+      if (err) {error = err; return;}
+      
+      connection.execute('select user from dual', [], function(err, result) {
+        if (err) {error = err; return;}
+ 
+        user = result.rows[0][0];
+        error = null;
+ 
+        connection.close(function(err) {
+          if (err) {console.log(err);}
+        });
+      })
+    }
+);
+ 
+http.createServer(function(request, response) {
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+ 
+  if (error === null) {
+    response.end('Connection test succeeded. You connected to Exadata Express as ' + user + '!');
+  } else if (error instanceof Error) {
+    response.write('Connection test failed. Check the settings and redeploy app!\n');
+    response.end(error.message);
+  } else {
+    response.end('Connection test pending. Refresh after a few seconds...');
+  }
+}).listen(process.env.PORT);
+
+</script>
 
 
 
-  
 </body>
 
 
