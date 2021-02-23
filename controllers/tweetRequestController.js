@@ -19,7 +19,7 @@ exports.getTweetRequest = function(req, res) {
   }, {
     
     id: '4',
-    Preparando_Acceso_a_BD: 'aca deberia hacer el aaceso a la BD y lrpm...'
+    Preparando_Acceso_a_BD: 'aca deberia hacer el aaceso a la BD y lrpm vergaaa mierdaaa ...'
     /*
     const sql = `SELECT department_name,
     CURSOR(SELECT salary, commission_pct
